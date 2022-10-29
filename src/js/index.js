@@ -22,7 +22,6 @@ function sign_in() {
             password: passwordField.value
         })
     }).then(function (r) {
-        console.log(r)
         if (r.status === 401) {
             errorField.innerText = 'Invalid username or password.';
         } else if (r.status === 500) {

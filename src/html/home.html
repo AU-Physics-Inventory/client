@@ -21,8 +21,8 @@
                 <div class="flex h-16 justify-between">
                     <div class="flex">
                         <div class="flex flex-shrink-0 items-center">
-                            <img class="block h-8 w-auto lg:hidden" src="https://tailwindui.com/img/logos/mark.svg?color=aublue&shade=600" alt="Your Company">
-                            <img class="hidden h-8 w-auto lg:block" src="https://tailwindui.com/img/logos/mark.svg?color=aublue&shade=600" alt="Your Company">
+                            <img id="logo1" class="block h-8 w-auto lg:hidden logo" src="" alt="Physics Inventory">
+                            <img id="logo2" class="hidden h-8 w-auto lg:block logo" src="" alt="Physics Inventory">
                         </div>
                         <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                             <!-- Current: "border-aublue-500 text-gray-900", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
@@ -45,7 +45,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                             </svg>
                         </button>
-                        </div>
+                        <button id="signOutButton" type="button" class="inline-flex items-center rounded-full border border-transparent bg-augold px-3.5 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-augold-dark focus:outline-none focus:ring-2 focus:ring-augold-dark focus:ring-offset-2">Sign out</button>
                     </div>
                     <div class="-mr-2 flex items-center sm:hidden">
                         <!-- Mobile menu button -->
@@ -124,7 +124,7 @@
                                 </div>
                             </div>
                             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                                <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-aublue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-aublue-700 focus:outline-none focus:ring-2 focus:ring-aublue-500 focus:ring-offset-2 sm:w-auto">Add asset</button>
+                                <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-aublue-light px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-aublue-dark focus:outline-none focus:ring-2 focus:ring-aublue focus:ring-offset-2 sm:w-auto">Add asset</button>
                             </div>
                         </div>
                         <div class="mt-8 flex flex-col">
@@ -135,11 +135,11 @@
                                             <thead class="bg-gray-50">
                                             <tr>
                                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name</th>
-                                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Title</th>
+                                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Location</th>
                                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
-                                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Role</th>
+                                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Quantity</th>
                                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                                    <span class="sr-only">Edit</span>
+                                                    <span class="sr-only">View/Edit</span>
                                                 </th>
                                             </tr>
                                             </thead>
@@ -165,7 +165,7 @@
                                                 </td>
                                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">Member</td>
                                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                    <a href="#" class="text-aublue-600 hover:text-aublue-900">Edit<span class="sr-only">, Lindsay Walton</span></a>
+                                                    <a href="#" class="text-aublue-600 hover:text-aublue-900">View/Edit<span class="sr-only">, Lindsay Walton</span></a>
                                                 </td>
                                             </tr>
 

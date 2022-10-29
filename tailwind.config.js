@@ -15,7 +15,7 @@ module.exports = {
         900: '#00101c',
         light: '#0073c6',
         DEFAULT: '#004a80',
-        dark: '#003155'
+        dark: '#00528e'
       },
       'augold': {
         100: '#f7f4ea',
