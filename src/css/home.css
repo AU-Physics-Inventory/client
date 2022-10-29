@@ -2,3 +2,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --au-gold: #CBB677;
+    --au-blue: rgb(0, 103, 172);
+}
