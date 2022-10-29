@@ -1,0 +1,7 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.3"
+  }
+}

@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --au-gold: #CBB677;
+    --au-blue: #004A80;
+    background: var(--au-blue);
+}
+
+.login-form {
+    background: var(--au-gold);
+}
+
+.login-error {
+    color: darkred;
+}
+
+.logo {
+    width: 100%;
+    height: auto;
+}
+
+.footer {
+    margin: 10px;
+}
+
+.saturate { filter: saturate(-100); }
+.contrast { filter: contrast(100%); }
+.brightness { filter: brightness(16); }
