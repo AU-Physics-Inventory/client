@@ -110,7 +110,7 @@
         <div class="py-10">
             <header>
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900">Assets</h1>
+                    <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900 assets-title">Assets</h1>
                 </div>
             </header>
             <main>
@@ -118,10 +118,13 @@
                     <div class="px-4 sm:px-6 lg:px-8">
                         <div class="sm:flex sm:items-center">
                             <div class="sm:flex-auto">
-                                <!-- Search goes here -->
+                                <div class="rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-indigo-600 focus-within:ring-1 focus-within:ring-indigo-600">
+                                    <label for="quicksearch" class="block text-xs font-medium text-gray-900">Quick search</label>
+                                    <input type="text" name="quicksearch" id="quicksearch" class="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" placeholder="Dynamic carts">
+                                </div>
                             </div>
                             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                                <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-aublue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-aublue-700 focus:outline-none focus:ring-2 focus:ring-aublue-500 focus:ring-offset-2 sm:w-auto">Add user</button>
+                                <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-aublue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-aublue-700 focus:outline-none focus:ring-2 focus:ring-aublue-500 focus:ring-offset-2 sm:w-auto">Add asset</button>
                             </div>
                         </div>
                         <div class="mt-8 flex flex-col">
