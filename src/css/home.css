@@ -11,3 +11,12 @@
 .assets-title {
     margin-bottom: 10px;
 }
+
+.pgbar-visible {
+    margin: 20px;
+    height: 8px;
+}
+
+.pgbar-hidden {
+    display: none !important;
+}
