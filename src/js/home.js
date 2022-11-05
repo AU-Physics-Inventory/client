@@ -1,9 +1,9 @@
 import config from "../config.js";
 import "./progressbar.js";
 
-let token = new URL(window.location.href).searchParams.get('token');
+let token = sessionStorage.getItem('token');
 if (token == null) {
-    window.location.href = 'index.html';
+    window.location.href = 'index.html?' + new URL(window.location.href).searchParams;
 }
 
 let bar = new ProgressBar.Line(progressBarDiv, {
@@ -21,6 +21,34 @@ let bar = new ProgressBar.Line(progressBarDiv, {
     }
 });
 
+let searchKeywords = ['location', 'inventoryNo', 'identityNo', 'brand', 'model', 'partNo', 'serial',
+    'vendor', 'status', 'nextCalibration', 'lastCalibration']
+
+let params = new URL(window.location.href).searchParams
+if (params.has('search')) {
+    bar.set(0.0);
+    fetch(config["server"].concat('/app/assets?') + params, {
+        method: 'GET', headers: {
+            'Content-Type': 'application/json', 'Authorization': token
+        }
+    }).then(response => checkAuthorization(response))
+        .then(response => response.text())
+        .then(body => JSON.parse(body))
+        .then(assets => updateAssetsTable(assets))
+        .then(() => {
+            bar.animate(1.0);
+        });
+} else {
+    fetch(config["server"].concat('/app/assets'), {
+        method: 'GET', headers: {
+            'Content-Type': 'application/json', 'Authorization': token
+        }
+    }).then(response => checkAuthorization(response))
+        .then(response => response.text())
+        .then(body => JSON.parse(body))
+        .then(assets => updateAssetsTable(assets))
+}
+
 document.getElementById('logo1').src = config["spaces"].concat("/logos/B_Physics Inventory-04.png");
 document.getElementById('logo2').src = config["spaces"].concat("/logos/B_Physics Inventory-04.png");
 document.getElementById('signOutButton').onclick = (event) => {
@@ -33,39 +61,57 @@ document.getElementById('signOutButton').onclick = (event) => {
     });
 }
 document.getElementById('quicksearch').onkeyup = (event) => {
+    let searchInput = event.target.value;
+
+    // On enter
     if (event.key === 'Enter') {
-        let searchInput = document.getElementById('quicksearch');
-        bar.set(0.0);
-        fetch(config["server"].concat('/app/assets?') + new URLSearchParams({
-            search: searchInput.value
-        }), {
-            method: 'GET', headers: {
-                'Content-Type': 'application/json', 'Authorization': token
+        if (searchInput.trim() === '') {
+            window.location.href = 'home.html';
+        } else {
+            if (searchInput.trim().startsWith('>')) {
+                if ((searchInput.match(/:/g) || []).length !== (searchInput.match(/;/g) || []).length) {
+                    alert('Are you forgetting a semicolon?')
+                    return;
+                }
+
+                let pattern = /[A-z]*:[A-z0-9 -]+;/g
+                let searchKeyRegexp = /[A-z]*:/;
+                let searchString = searchInput.trim().substring(1);
+                let matches = searchString.matchAll(pattern)
+                let searchParams = new URLSearchParams();
+                for (const match of matches) {
+                    let matchString = match[0];
+                    let keyword = matchString.match(searchKeyRegexp)[0];
+                    keyword = keyword.substring(0, keyword.length - 1);
+                    if (searchKeywords.includes(keyword)) {
+                        searchParams.set(keyword, matchString.split(searchKeyRegexp).filter(Boolean).join(" ").replace(';', '').trim())
+                    } else {
+                        alert('Unknown field ' + keyword);
+                        return
+                    }
+                }
+                let noMatches = searchString.split(pattern);
+                let searchParam = noMatches.filter(Boolean).map(x => x.trim()).join(" ");
+                searchParams.set('search', searchParam);
+                window.location.href = 'home.html?' + searchParams
+            } else {
+                window.location.href = 'home.html?' + new URLSearchParams({
+                    search: searchInput
+                })
             }
-        }).then(response => checkAuthorization(response))
-            .then(response => response.text())
-            .then(body => JSON.parse(body))
-            .then(assets => updateAssetsTable(assets))
-            .then(() => {
-                bar.animate(1.0);
-            })
+        }
     }
+
+    // If input starts with '>', show advanced search text
+    let label = document.getElementById('quicksearchlabel')
+    if (searchInput.trim().startsWith('>')) label.innerText = 'Advanced Search';
+    else label.innerText = 'Quick search';
 }
-
-fetch(config["server"].concat('/app/assets'), {
-    method: 'GET', headers: {
-        'Content-Type': 'application/json', 'Authorization': token
-    }
-}).then(response => checkAuthorization(response))
-    .then(response => response.text())
-    .then(body => JSON.parse(body))
-    .then(assets => updateAssetsTable(assets))
-
 
 function checkAuthorization(response) {
     console.log(response.status)
     if (response.status === 401) {
-        window.location.href = 'index.html'
+        window.location.href = 'index.html?' + new URL(window.location.href).searchParams
     } else {
         return response;
     }

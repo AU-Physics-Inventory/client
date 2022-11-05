@@ -20,3 +20,22 @@
 .pgbar-hidden {
     display: none !important;
 }
+
+@keyframes dropdownAni {
+    from {opacity: 0; scale: 95}
+    to {opacity: 100; scale: 100}
+}
+
+.startDropdown {
+    transform: none;
+    animation-name: startDropdownAni;
+    animation-duration: 4s;
+    animation-direction: normal;
+}
+
+.stopDropdown {
+    transform: none;
+    animation-name: startDropdownAni;
+    animation-duration: 4s;
+    animation-direction: reverse;
+}

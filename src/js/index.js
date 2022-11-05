@@ -33,6 +33,10 @@ function sign_in() {
         }
         return Promise.reject(errorField.innerText);
     }).then(body => {
-        window.location.href = 'home.html?token=' + body.token
+        sessionStorage.setItem('token', body.token)
+        window.location.href = 'home.html?' + new URL(window.location.href).searchParams;
     }, () => {})
+        .catch(() => {
+            errorField.innerText = 'An unknown error occurred.'
+        })
 }
