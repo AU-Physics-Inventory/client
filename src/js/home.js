@@ -1,4 +1,5 @@
 import config from "../config.js";
+import nav from "./partials/nav.js"
 import "./progressbar.js";
 
 let token = sessionStorage.getItem('token');
@@ -49,6 +50,10 @@ if (params.has('search')) {
         .then(assets => updateAssetsTable(assets))
 }
 
+let navDoc = document.createElement("nav");
+navDoc.className = 'bg-white shadow-sm';
+navDoc.innerHTML = nav;
+document.getElementById("mainDiv").prepend(navDoc);
 document.getElementById('logo1').src = config["spaces"].concat("/logos/B_Physics Inventory-04.png");
 document.getElementById('logo2').src = config["spaces"].concat("/logos/B_Physics Inventory-04.png");
 document.getElementById('signOutButton').onclick = (event) => {
@@ -217,7 +222,7 @@ function updateAssetsTable(assets) {
 
         viewLinkText.innerText = 'View/Edit'
         viewLinkSpan.innerText = ', ' + asset.name;
-        viewLink.href = 'view.html?token=' + token + '&id=' + asset._id;
+        viewLink.href = 'view.html?id=' + asset._id;
 
         viewCell.appendChild(viewLink);
         viewLink.append(viewLinkText, viewLinkSpan);

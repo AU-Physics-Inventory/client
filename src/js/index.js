@@ -10,8 +10,17 @@ document.getElementById('signInForm').onsubmit = function(event) {
 const errorField = document.getElementById('login-error');
 const usernameField = document.getElementById('username');
 const passwordField = document.getElementById('password');
+const rememberMeCheckBox = document.getElementById('remember-me')
+
+const storedUsername = localStorage.getItem('username')
+if (storedUsername !== null) {
+    usernameField.value = storedUsername;
+    rememberMeCheckBox.checked = true;
+}
 
 function sign_in() {
+    if (rememberMeCheckBox.checked) localStorage.setItem('username', usernameField.value);
+    else localStorage.setItem('username', null);
     fetch(config["server"].concat("/login"), {
         method: 'POST',
         headers: {
@@ -34,7 +43,12 @@ function sign_in() {
         return Promise.reject(errorField.innerText);
     }).then(body => {
         sessionStorage.setItem('token', body.token)
-        window.location.href = 'home.html?' + new URL(window.location.href).searchParams;
+        let searchParams = new URL(window.location.href).searchParams
+        if (searchParams.has("from")) {
+            let redirect = searchParams.get("from") + '.html?'
+            searchParams.delete("from")
+            window.location.href = redirect + searchParams
+        } else window.location.href = 'home.html?' + searchParams;
     }, () => {})
         .catch(() => {
             errorField.innerText = 'An unknown error occurred.'
