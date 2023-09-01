@@ -1,0 +1,74 @@
+.main {
+  height: 100vh;
+  font-family: var(--font-serif);
+}
+
+.navbar {
+  height: 7vh;
+  border-bottom: silver 1px solid;
+  box-shadow: 0 1px grey;
+  display: flex;
+  background: var(--AU-BLUE);
+}
+
+.navbarLogo {
+  height: 90%;
+  width: auto;
+  margin: auto 0;
+}
+
+.loginDiv {
+  height: 93vh;
+  width: 100%;
+  display: flex;
+  background: gainsboro;
+}
+
+.loginDiv > div {
+  width: 50%;
+  height: 100%;
+}
+
+.logoDiv {
+  display: flex;
+}
+
+.loginForm {
+  margin: 0 auto;
+  display: grid;
+  grid-auto-flow: row;
+  grid-auto-rows: 70px;
+  padding-top: 7%;
+}
+
+.loginForm > h2 {
+
+}
+
+.logoImg {
+  margin: 15% auto;
+  max-width: 250px;
+  max-height: 250px;
+  width: 100%;
+  height: auto;
+}
+
+.loginForm input {
+  border-radius: 10px;
+  border: silver 1px solid;
+  height: 30px;
+  width: 70%;
+  max-width: 300px;
+}
+
+.loginForm button {
+  border-radius: 10px;
+  width: 70%;
+  max-width: 300px;
+  height: 30px;
+  border: #004A80 2px solid;
+  background: #004A80;
+  color: silver;
+  font-family: 'Roboto Slab Bold', 'serif';
+  font-size: 16px;
+}
