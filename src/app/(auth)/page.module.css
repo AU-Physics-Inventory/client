@@ -1,74 +1,148 @@
 .main {
-  height: 100vh;
-  font-family: var(--font-serif);
+    height: 100vh;
+    font-family: var(--font-serif);
 }
 
 .navbar {
-  height: 7vh;
-  border-bottom: silver 1px solid;
-  box-shadow: 0 1px grey;
-  display: flex;
-  background: var(--AU-BLUE);
+    height: 7vh;
+    border-bottom: silver 1px solid;
+    box-shadow: 0 1px grey;
+    display: flex;
+    background: var(--AU-BLUE);
 }
 
 .navbarLogo {
-  height: 90%;
-  width: auto;
-  margin: auto 0;
+    height: 90%;
+    width: auto;
+    margin: auto 0;
 }
 
-.loginDiv {
-  height: 93vh;
-  width: 100%;
-  display: flex;
-  background: gainsboro;
+/* large devices */
+@media only screen and (min-width: 600px) {
+    .loginDiv {
+        height: 93vh;
+        width: 100%;
+        display: flex;
+        background: gainsboro;
+    }
+
+    .loginDiv > div {
+        width: 50%;
+        height: 100%;
+    }
+
+    .loginForm {
+        margin: 0 auto;
+        display: grid;
+        grid-auto-flow: row;
+        grid-auto-rows: 70px;
+        padding-top: 7%;
+    }
+
+    .logoImg {
+        margin: 15% auto;
+        max-width: 250px;
+        max-height: 250px;
+        width: 100%;
+        height: auto;
+    }
 }
 
-.loginDiv > div {
-  width: 50%;
-  height: 100%;
+/* small devices */
+@media only screen and (max-width: 600px) {
+    .logoDiv {
+        height: 30%;
+    }
+
+    .logoImg {
+        margin: 15% auto;
+        max-width: 175px;
+        max-height: 175px;
+        width: auto;
+        height: 100%;
+    }
+
+    .loginDiv {
+        height: 93vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background: gainsboro;
+    }
+
+    .loginDiv > div {
+        width: 100%;
+    }
+
+    .loginForm {
+        height: 70%;
+        margin: auto 0;
+        display: grid;
+        grid-auto-flow: row;
+        grid-auto-rows: 100px;
+        padding-top: 10%;
+    }
+
+    .loginForm > div {
+        margin: 0 auto;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-auto-flow: row;
+        justify-content: center;
+    }
+
+    .loginForm > div > * {
+        margin: 0 auto;
+        width: 100%;
+        height: 100%;
+    }
+
+    .loginForm > div > label {
+        text-align: center;
+    }
+
+    .loginForm > div > input {
+        width: 100%;
+    }
+
+    .loginForm > div > button {
+        width: 100%;
+    }
+
+    .loginForm a:visited {
+        color: blue;
+    }
 }
 
 .logoDiv {
-  display: flex;
-}
-
-.loginForm {
-  margin: 0 auto;
-  display: grid;
-  grid-auto-flow: row;
-  grid-auto-rows: 70px;
-  padding-top: 7%;
-}
-
-.loginForm > h2 {
-
-}
-
-.logoImg {
-  margin: 15% auto;
-  max-width: 250px;
-  max-height: 250px;
-  width: 100%;
-  height: auto;
+    display: flex;
 }
 
 .loginForm input {
-  border-radius: 10px;
-  border: silver 1px solid;
-  height: 30px;
-  width: 70%;
-  max-width: 300px;
+    border-radius: 10px;
+    border: silver 1px solid;
+    height: 30px;
+    width: 70%;
+    max-width: 300px;
 }
 
 .loginForm button {
-  border-radius: 10px;
-  width: 70%;
-  max-width: 300px;
-  height: 30px;
-  border: #004A80 2px solid;
-  background: #004A80;
-  color: silver;
-  font-family: 'Roboto Slab Bold', 'serif';
-  font-size: 16px;
+    border-radius: 10px;
+    width: 70%;
+    max-width: 300px;
+    height: 30px;
+    border: #004A80 2px solid;
+    background: #004A80;
+    color: silver;
+    font-family: 'Roboto Slab Bold', 'serif';
+    font-size: 16px;
+}
+
+.loginForm button:active {
+    border: silver 1px solid;
+}
+
+.loginForm button:hover {
+    cursor: pointer;
 }

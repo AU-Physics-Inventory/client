@@ -3,8 +3,15 @@
 import Image from 'next/image'
 import styles from './page.module.css'
 import config from "../../resources/config.js"
+import {useState} from "react";
 
 export default function Login() {
+    const [user, setUser] = useState('');
+    const [password, setPassword] = useState('');
+    const handleClick = () => {
+
+    }
+
     return (
         <main className={styles.main}>
             <style jsx global> {`
@@ -20,7 +27,7 @@ export default function Login() {
                 }
                 
                 body {
-                    //background: var(--AU-BLUE);
+                    background: var(--AU-BLUE);
                 }
             `}</style>
             <div className={styles.navbar}>
@@ -46,14 +53,14 @@ export default function Login() {
                     </div>
                     <div>
                         <label htmlFor="usernameField">Username</label><br/>
-                        <input type="text" name="usernameField"/><br/>
+                        <input type="text" name="usernameField" onChange={(e) => setUser(e.target.value)}/><br/>
                     </div>
                     <div>
                         <label htmlFor="passwordField">Password</label><br/>
-                        <input type="password" name="passwordField"/><br/>
+                        <input type="password" name="passwordField" onChange={(e) => setPassword(e.target.value)}/><br/>
                     </div>
                     <div>
-                        <button>Login</button>
+                        <button onClick={handleClick}>Login</button>
                         <p>or <a href="/register">Register</a></p>
                     </div>
                 </div>
