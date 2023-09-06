@@ -17,7 +17,7 @@ import axios from "axios";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 
-export default function JoySignInSideTemplate() {
+export default function SignIn() {
     const router = useRouter();
     const [username, setUsername] = useState('');
     const [error, setError] = useState(null);
