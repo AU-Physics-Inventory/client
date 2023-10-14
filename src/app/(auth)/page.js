@@ -21,9 +21,10 @@ import { Logtail } from "@logtail/browser";
 const logtail = new Logtail("eNj5LdqqzBcfnBbDFBEZmfEf");
 
 export default function SignIn() {
-    const router = useRouter();
-    const [username, setUsername] = useState('');
-    const [error, setError] = useState(null);
+    const router = useRouter()
+    const [username, setUsername] = useState('')
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         const storedToken = sessionStorage.getItem('token');
@@ -52,6 +53,7 @@ export default function SignIn() {
     }, [router])
 
     const handleSignIn = (data) => {
+        setLoading(true)
         axios.post(config.server.concat('/login'), {
             username: data.username,
             password: data.password
@@ -83,7 +85,7 @@ export default function SignIn() {
             }
 
             logtail.flush()
-        })
+        }).finally(() => setLoading(false))
     }
 
     return (<CssVarsProvider disableTransitionOnChange>
@@ -206,7 +208,7 @@ export default function SignIn() {
                                     Forgot your password?
                                 </Link>
                             </Box>
-                            <Button type="submit" fullWidth>
+                            <Button loading={loading} type="submit" fullWidth>
                                 Sign in
                             </Button>
                         </form>
