@@ -16,6 +16,9 @@ import config from "@/resources/config";
 import axios from "axios";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
+import { Logtail } from "@logtail/browser";
+
+const logtail = new Logtail("eNj5LdqqzBcfnBbDFBEZmfEf");
 
 export default function SignIn() {
     const router = useRouter();
@@ -23,7 +26,7 @@ export default function SignIn() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const storedToken = localStorage.getItem('token');
+        const storedToken = sessionStorage.getItem('token');
         if (storedToken !== null && storedToken.length !== 0) {
             axios.get(config.server.concat('/validate'), {
                 headers: {
@@ -31,16 +34,18 @@ export default function SignIn() {
                 }
             }).then((response) => {
                 if (response.status === 200) {
-                    console.log('User already logged in. Redirecting...')
-                    //router.push('/app')
+                    logtail.info('User already logged in. Redirecting...')
+                    router.push('/app/home')
                 } else {
-                    console.log('User token is not valid. Clearing...')
-                    localStorage.removeItem('token')
+                    logtail.info('User token is not valid. Clearing...')
+                    sessionStorage.removeItem('token')
                 }
+
+                logtail.flush()
             })
         }
 
-        const storedUsername = localStorage.getItem('username');
+        const storedUsername = sessionStorage.getItem('username');
         if (storedUsername !== null && storedUsername.length !== 0) {
             setUsername(storedUsername);
         }
@@ -52,19 +57,33 @@ export default function SignIn() {
             password: data.password
         }).then((response) => {
             if (data.persistent) {
-                localStorage.setItem('username', data.username)
+                sessionStorage.setItem('username', data.username)
             }
 
-            localStorage.setItem('token', response.data.token);
-            router.push('/app')
-        }).catch((error) => {
-            if (error.response.status === 401) {
-                console.log('Unsuccessful login attempt.')
-                setError("Incorrect username or password. Please try again.");
+            sessionStorage.setItem('token', response.data.token);
+            router.push('/app/home')
+        }).catch((err) => {
+            logtail.error('Unsuccessful login attempt.')
+
+            if (err.response) {
+                if (err.response.status === 401) {
+                    setError("Incorrect username or password. Please try again.");
+                } else if (err.response.status === 403) {
+                    setError(err.response.data.message)
+                } else {
+                    setError("An unexpected error occurred. Please try again later.");
+                }
+                logtail.error(error)
+            } else if (err.request) {
+                logtail.error('Request was made but no response')
+                logtail.error(err)
             } else {
-                setError("An unexpected error occurred. Please try again later.");
+                logtail.error('Request was not made')
+                logtail.error(err.message)
             }
-        });
+
+            logtail.flush()
+        })
     }
 
     return (<CssVarsProvider disableTransitionOnChange>
