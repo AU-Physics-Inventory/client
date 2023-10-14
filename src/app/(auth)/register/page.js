@@ -19,6 +19,7 @@ export default function Register() {
     const router = useRouter();
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null);
+    const [username, setUsername] = useState(null);
 
     const handleRegistration = (data) => {
         if (data.password !== data.passwordConf) {
@@ -39,7 +40,7 @@ export default function Register() {
                     if (!response.validFirstName) setError('First name must not be empty')
                     else if (!response.validLastName) setError('Last name must not be empty')
                     else if (!response.validEmail) setError('Invalid email')
-                    else if (!response.validUsername) setError('Username must not be empty')
+                    else if (!response.validUsername) setError('Username must not be empty and may only contain letters and numbers')
                     else if (!response.validPassword) setError('Password does not meet minimum security requirements')
                     else if (!response.uniqueEmail) setError('An account with this email already exists')
                     else if (!response.uniqueUsername) setError('Username is already taken')
@@ -113,7 +114,11 @@ export default function Register() {
             </FormControl>
             <FormControl required>
                 <FormLabel>Username</FormLabel>
-                <Input type="text" name="username"/>
+                <Input type="text"
+                       name="username"
+                       onChange={(event) => setUsername(event.target.value)}
+                       error={!username.match(/^[0-9a-z]*$/i)}
+                />
             </FormControl>
             <FormControl required>
                 <FormLabel>Password</FormLabel>
