@@ -3,11 +3,12 @@ import Typography from "@mui/joy/Typography";
 import Image from "next/image";
 import ImageNAImage from "@/resources/image_not_available.png";
 import config from "@/resources/config";
-import {Modal, ModalClose, ModalDialog, Table} from "@mui/joy";
+import {CircularProgress, Modal, ModalClose, ModalDialog, Table} from "@mui/joy";
 import {useState} from "react";
 
 export default function ResultsTable(props) {
     const [openModal, setOpenModal] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     return <>
         <Table
@@ -39,13 +40,14 @@ export default function ResultsTable(props) {
                                        width={64}
                                        height={64}
                                        style={{cursor: 'pointer'}}
-                                       onClick={() => setOpenModal(row.id)}
+                                       onClick={() => {setOpenModal(row.id); setLoading(true)}}
                                 />}>
                             {row.name}
                         </Typography>
                         <Modal open={openModal === row.id} onClose={() => setOpenModal(null)}>
                             <ModalDialog color="neutral" size="lg" variant="soft" sx={{width: '60vw', height: '60vh', display: 'flex'}}>
-                                <Image alt="Item image" src={row.images === null ? ImageNAImage : config.spaces.concat('/images/').concat(row.images[0])} fill style={{objectFit: 'contain'}}/>
+                                {loading && <CircularProgress sx={{m: 'auto'}} size="lg" variant="plain" />}
+                                <Image onLoadingComplete={() => setLoading(false)} alt="Item image" src={row.images === null ? ImageNAImage : config.spaces.concat('/images/').concat(row.images[0])} fill style={{objectFit: 'contain'}}/>
                                 <ModalClose />
                             </ModalDialog>
                         </Modal>
