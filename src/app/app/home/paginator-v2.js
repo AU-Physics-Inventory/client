@@ -6,7 +6,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import {useState} from "react";
 
 export default function Paginator(props) {
-    const maxPageNumber = (props.count / 25)
+    const maxPageNumber = Math.ceil(props.count / 25)
 
     return <>
         <Box
@@ -38,7 +38,7 @@ export default function Paginator(props) {
                     color="neutral"
                     sx={{py: 0.5, px: 1, borderRadius: 50}}
                 >
-                    Page {props.pageNumber} of {Math.ceil(maxPageNumber)}
+                    Page {maxPageNumber === 0 ? 0 : props.pageNumber} of {maxPageNumber}
                 </Sheet>
             </Box>
 
