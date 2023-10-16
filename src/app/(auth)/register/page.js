@@ -2,7 +2,7 @@
 
 import {useRouter} from "next/navigation";
 import {CssVarsProvider} from "@mui/joy/styles";
-import {Sheet} from "@mui/joy";
+import {FormHelperText, Sheet} from "@mui/joy";
 import Typography from "@mui/joy/Typography";
 import FormControl from "@mui/joy/FormControl";
 import FormLabel, {formLabelClasses} from "@mui/joy/FormLabel";
@@ -16,10 +16,12 @@ import config from "@/resources/config";
 import Box from "@mui/joy/Box";
 
 export default function Register() {
-    const router = useRouter();
+    const router = useRouter()
     const [error, setError] = useState(null)
-    const [success, setSuccess] = useState(null);
-    const [username, setUsername] = useState(null);
+    const [success, setSuccess] = useState(null)
+    const [username, setUsername] = useState(null)
+    const [password, setPassword] = useState('')
+    const [passwordConf, setPasswordConf] = useState('')
 
     const handleRegistration = (data) => {
         if (data.password !== data.passwordConf) {
@@ -87,7 +89,7 @@ export default function Register() {
                         Register a new account
                     </Typography>
                 </Box>
-                <form onSubmit={(event) => {
+                <form autoComplete="off" onSubmit={(event) => {
                 event.preventDefault();
                 const formElements = event.currentTarget.elements;
                 const data = {
@@ -96,7 +98,7 @@ export default function Register() {
                 email: formElements.email.value,
                 username: formElements.username.value,
                 password: formElements.password.value,
-                    passwordConf: formElements.passwordConf.value
+                passwordConf: formElements.passwordConf.value
             };
                 handleRegistration(data);
             }}>
@@ -120,14 +122,15 @@ export default function Register() {
                        error={!/^[0-9a-z]*$/i.test(username)}
                 />
             </FormControl>
-            <FormControl required>
+            <FormControl error={password !== passwordConf} required>
                 <FormLabel>Password</FormLabel>
-                <Input type="password" name="password"/>
+                <Input onChange={(e) => setPassword(e.target.value)} type="password" name="password"/>
                 <Typography level="body-xs">8-20 characters. Must include at least one uppercase letter, one lowercase letter, one number, and one symbol.</Typography>
             </FormControl>
-            <FormControl required>
+            <FormControl error={password !== passwordConf} required>
                 <FormLabel>Confirm Password</FormLabel>
-                <Input type="password" name="passwordConf"/>
+                <Input onChange={(e) => setPasswordConf(e.target.value)} type="password" name="passwordConf"/>
+                {(password !== passwordConf) && <FormHelperText>Passwords must match.</FormHelperText>}
             </FormControl>
             <Button type="submit" fullWidth>
                 Register
