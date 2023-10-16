@@ -34,7 +34,7 @@ export default function Home() {
     const handleNewSearch = (query, filters) => {
         queryParams.current = {}
         if (query) queryParams.current.search = query;
-        filters.forEach((key, value) => queryParams.current[key] = value)
+        filters.forEach((value, key) => queryParams.current[key] = value)
         search(0)
     }
 

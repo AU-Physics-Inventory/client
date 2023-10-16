@@ -1,15 +1,38 @@
 import SearchIcon from "@mui/icons-material/Search";
-import {Dropdown, IconButton, Menu, MenuButton, MenuItem, Stack} from "@mui/joy";
+import {
+    Chip,
+    ChipDelete,
+    Dropdown,
+    IconButton,
+    Menu,
+    MenuButton,
+    MenuItem,
+    Modal, ModalClose,
+    ModalDialog,
+    Stack
+} from "@mui/joy";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import Input from "@mui/joy/Input";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from "@mui/joy/Typography";
 import {useState} from "react";
+import Box from "@mui/joy/Box";
+import {DialogTitle} from "@mui/material";
+import FormControl from "@mui/joy/FormControl";
+import FormLabel from "@mui/joy/FormLabel";
+import Button from "@mui/joy/Button";
+import {Map} from "immutable";
+
 
 export default function Search(props) {
     const [query, setQuery] = useState('')
+    const [openModal, setOpenModal] = useState(null)
+    const [selectedFilters, setSelectedFilters] = useState(Map())
 
-    const selectedFilters = new Map()
+    const handleFilterSelection = (newFilterState) => {
+        props.handleSearch(query, newFilterState)
+        setSelectedFilters(newFilterState)
+    }
 
     const searchOptions = [
         {label: "Location", name: "location"},
@@ -50,7 +73,7 @@ export default function Search(props) {
                         level="body-xs"
                         textTransform="uppercase"
                         fontWeight="lg"
-                        sx={{px: 1}}
+                        sx={{px: 1, py: 0.3}}
                     >
                         Filters
                     </Typography>
@@ -69,6 +92,43 @@ export default function Search(props) {
                    onChange={(event) => setQuery(event.target.value)}
                    onKeyUp={(event) => {if (event.key === 'Enter') props.handleSearch(query, selectedFilters)}}
             />
+            <Box sx={{my: 0.7, display: 'flex', mx: 'auto', maxWidth: 1}}>
+                <Typography
+                    level="body-xs"
+                    textTransform="uppercase"
+                    fontWeight="lg"
+                    sx={{my: 'auto', marginRight: 0.8,}}
+                >
+                    Filters
+                </Typography>
+                <Box sx={{overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap', display: 'grid', gridAutoFlow: 'column', gap: 1}}>
+                    {searchOptions.map((option) => <>
+                        <Chip onClick={() => setOpenModal(option.name)} size="md" color="primary" variant={selectedFilters.has(option.name) ? "solid" : "soft"} key={option.name} endDecorator={selectedFilters.has(option.name) && <ChipDelete onDelete={() => handleFilterSelection(selectedFilters.remove(option.name))} />}>{option.label}</Chip>
+                        <Modal open={openModal === option.name} onClose={() => setOpenModal(null)}>
+                            <ModalDialog>
+                                <ModalClose />
+                                <DialogTitle>Filter by {option.label}</DialogTitle>
+                                <form
+                                    onSubmit={(event) => {
+                                        event.preventDefault();
+                                        handleFilterSelection(selectedFilters.set(option.name, event.currentTarget.elements.inputField.value))
+                                        setOpenModal(false);
+                                    }}
+                                    autoComplete="off"
+                                >
+                                    <Stack spacing={2}>
+                                        <FormControl>
+                                            <FormLabel>{option.label}</FormLabel>
+                                            <Input name="inputField" defaultValue={selectedFilters.has(option.name) ? selectedFilters.get(option.name) : ''} autoFocus required />
+                                        </FormControl>
+                                        <Button type="submit">Apply filter</Button>
+                                    </Stack>
+                                </form>
+                            </ModalDialog>
+                        </Modal>
+                    </>)}
+                </Box>
+            </Box>
         </Stack>
     </>
 }
