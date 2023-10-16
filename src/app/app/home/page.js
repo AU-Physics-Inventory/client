@@ -10,10 +10,10 @@ import ResultsTable from "@/app/app/home/table";
 import Search from "@/app/app/home/search";
 
 export default function Home() {
-    const token = sessionStorage.getItem("token")
     const [data, setData] = useState([])
     const [count, setCount] = useState(1)
     const [pageNumber, setPageNumber] = useState(1)
+    const [token, setToken] = useState(null)
     const queryParams = useRef({})
 
     const search = (offset = 0) => {
@@ -47,6 +47,7 @@ export default function Home() {
     }
 
     useEffect(() => {
+        const token = sessionStorage.getItem("token")
         axios.get(config.server.concat('/app/assets'), {
             headers: {
                 'Authorization': token
@@ -57,6 +58,7 @@ export default function Home() {
                 setCount(response.data.matchCount)
             }
         })
+        setToken(token)
     }, [])
 
     return <>

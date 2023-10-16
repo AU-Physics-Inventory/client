@@ -117,7 +117,7 @@ export default function Register() {
                 <Input type="text"
                        name="username"
                        onChange={(event) => setUsername(event.target.value)}
-                       error={!username.match(/^[0-9a-z]*$/i)}
+                       error={!/^[0-9a-z]*$/i.test(username)}
                 />
             </FormControl>
             <FormControl required>
