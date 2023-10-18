@@ -8,7 +8,7 @@ import FormControl from "@mui/joy/FormControl";
 import FormLabel, {formLabelClasses} from "@mui/joy/FormLabel";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import CssBaseline from "@mui/joy/CssBaseline";
 import GlobalStyles from "@mui/joy/GlobalStyles";
 import axios from "axios";
@@ -18,10 +18,14 @@ import Box from "@mui/joy/Box";
 export default function Register() {
     const router = useRouter()
     const [error, setError] = useState(null)
-    const [success, setSuccess] = useState(null)
+    const [success, setSuccess] = useState(false)
     const [username, setUsername] = useState(null)
     const [password, setPassword] = useState('')
     const [passwordConf, setPasswordConf] = useState('')
+
+    useEffect(() => {
+        if (success) setTimeout(() => router.replace('/'), 5000)
+    },[router, success])
 
     const handleRegistration = (data) => {
         if (data.password !== data.passwordConf) {
