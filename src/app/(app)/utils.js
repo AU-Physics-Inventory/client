@@ -12,5 +12,5 @@ export function signOut(router) {
         .catch(() => {})
 
     sessionStorage.removeItem('token')
-    router.push('/')
+    router.replace('/login')
 }

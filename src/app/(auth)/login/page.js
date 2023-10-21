@@ -27,30 +27,11 @@ export default function SignIn() {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        const storedToken = sessionStorage.getItem('token');
-        if (storedToken !== null && storedToken.length !== 0) {
-            axios.get(config.server.concat('/validate'), {
-                headers: {
-                    'Authorization': storedToken
-                }
-            }).then((response) => {
-                if (response.status === 200) {
-                    logtail.info('User already logged in. Redirecting...')
-                    router.push('/app/home')
-                } else {
-                    logtail.info('User token is not valid. Clearing...')
-                    sessionStorage.removeItem('token')
-                }
-
-                logtail.flush()
-            })
-        }
-
         const storedUsername = sessionStorage.getItem('username');
         if (storedUsername !== null && storedUsername.length !== 0) {
             setUsername(storedUsername);
         }
-    }, [router])
+    }, [])
 
     const handleSignIn = (data) => {
         setLoading(true)
@@ -63,7 +44,7 @@ export default function SignIn() {
             }
 
             sessionStorage.setItem('token', response.data.token);
-            router.push('/app/home')
+            router.replace('/')
         }).catch((err) => {
             logtail.error('Unsuccessful login attempt.')
 
@@ -79,9 +60,11 @@ export default function SignIn() {
             } else if (err.request) {
                 logtail.error('Request was made but no response')
                 logtail.error(err)
+                setError("Something isn't working right now... Please try again later.");
             } else {
                 logtail.error('Request was not made')
                 logtail.error(err.message)
+                setError("Yikes! We're having trouble fulfilling your request right now. Please try again later.");
             }
 
             logtail.flush()
@@ -204,7 +187,7 @@ export default function SignIn() {
                                 }}
                             >
                                 <Checkbox size="sm" label="Remember me" name="persistent"/>
-                                <Link fontSize="sm" href="/" fontWeight="lg">
+                                <Link fontSize="sm" href="/login" fontWeight="lg">
                                     Forgot your password?
                                 </Link>
                             </Box>
