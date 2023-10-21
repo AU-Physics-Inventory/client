@@ -2,6 +2,10 @@ import './globals.css'
 import { inter, roboto_slab} from "@/app/fonts";
 import Head from "next/head";
 import {CssVarsProvider, extendTheme} from "@mui/joy";
+import CssBaseline from "@mui/joy/CssBaseline";
+import Header from "@/app/(app)/header";
+import Box from "@mui/joy/Box";
+import Sidebar from "@/app/(app)/sidebar";
 
 export const metadata = {
   title: 'Physics Inventory',

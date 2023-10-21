@@ -21,7 +21,7 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import {useEffect, useState} from "react";
 import {Buffer} from "buffer";
 import {useRouter} from "next/navigation";
-import {signOut} from "@/app/app/utils";
+import {signOut} from "@/app/(app)/utils";
 import Box from "@mui/joy/Box";
 import Image from "next/image";
 import config from "@/resources/config";
@@ -67,7 +67,7 @@ export default function Sidebar() {
                     <ListItem>
                         <ListItemButton selected={selectedIndex === 0} onClick={() => {
                             setSelectedIndex(0)
-                            router.push('/app/home')
+                            router.push('/')
                         }}>
                             <ListItemDecorator>
                                 <BubbleChartIcon />
@@ -78,7 +78,7 @@ export default function Sidebar() {
                     <ListItem>
                         <ListItemButton selected={selectedIndex === 1} onClick={() => {
                             setSelectedIndex(1)
-                            router.push('/app/collections')
+                            router.push('/collections')
                         }}>
                             <ListItemDecorator>
                                 <LibraryBooksIcon />
@@ -89,7 +89,7 @@ export default function Sidebar() {
                     <ListItem>
                         <ListItemButton selected={selectedIndex === 2} onClick={() => {
                             setSelectedIndex(2)
-                            router.push('/app/labs')
+                            router.push('/labs')
                         }}>
                             <ListItemDecorator>
                                 <ScienceIcon />
@@ -100,7 +100,7 @@ export default function Sidebar() {
                     <ListItem>
                         <ListItemButton selected={selectedIndex === 3} onClick={() => {
                             setSelectedIndex(3)
-                            router.push('/app/maintenance')
+                            router.push('/maintenance')
                         }}>
                             <ListItemDecorator>
                                 <BuildIcon />
@@ -115,7 +115,7 @@ export default function Sidebar() {
                         <ListItem>
                             <ListItemButton selected={selectedIndex === 4} onClick={() => {
                                 setSelectedIndex(4)
-                                router.push('/app/admin/approvals')
+                                router.push('/admin/approvals')
                             }}>
                                 <ListItemDecorator>
                                     <CheckCircleOutlineIcon />
@@ -126,7 +126,7 @@ export default function Sidebar() {
                         <ListItem>
                             <ListItemButton selected={selectedIndex === 5} onClick={() => {
                                 setSelectedIndex(5)
-                                router.push('/app/admin/users')
+                                router.push('/admin/users')
                             }}>
                                 <ListItemDecorator>
                                     <PeopleRoundedIcon />
@@ -141,7 +141,7 @@ export default function Sidebar() {
                     <ListItem>
                         <ListItemButton selected={selectedIndex === 6} onClick={() => {
                             setSelectedIndex(6)
-                            router.push('/app/account/profile')
+                            router.push('/account/profile')
                         }}>
                             <ListItemDecorator>
                                 <AccountCircleIcon />

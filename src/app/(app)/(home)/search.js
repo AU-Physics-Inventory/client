@@ -7,7 +7,8 @@ import {
     Menu,
     MenuButton,
     MenuItem,
-    Modal, ModalClose,
+    Modal,
+    ModalClose,
     ModalDialog,
     Stack
 } from "@mui/joy";
@@ -102,9 +103,7 @@ export default function Search(props) {
                     Filters
                 </Typography>
                 <Box sx={{overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap', display: 'grid', gridAutoFlow: 'column', gap: 1}}>
-                    {searchOptions.map((option) => <>
-                        <Chip onClick={() => setOpenModal(option.name)} size="md" color="primary" variant={selectedFilters.has(option.name) ? "solid" : "soft"} key={option.name} endDecorator={selectedFilters.has(option.name) && <ChipDelete onDelete={() => handleFilterSelection(selectedFilters.remove(option.name))} />}>{option.label}</Chip>
-                        <Modal open={openModal === option.name} onClose={() => setOpenModal(null)}>
+                    {searchOptions.map((option) => <Chip onClick={() => setOpenModal(option.name)} size="md" color="primary" variant={selectedFilters.has(option.name) ? "solid" : "soft"} key={option.name} endDecorator={selectedFilters.has(option.name) && <ChipDelete onDelete={() => handleFilterSelection(selectedFilters.remove(option.name))} />}>{option.label}<Modal open={openModal === option.name} onClose={() => setOpenModal(null)}>
                             <ModalDialog>
                                 <ModalClose />
                                 <DialogTitle>Filter by {option.label}</DialogTitle>
@@ -126,7 +125,7 @@ export default function Search(props) {
                                 </form>
                             </ModalDialog>
                         </Modal>
-                    </>)}
+                    </Chip>)}
                 </Box>
             </Box>
         </Stack>

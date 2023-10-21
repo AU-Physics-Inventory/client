@@ -22,9 +22,10 @@ export default function Register() {
     const [username, setUsername] = useState(null)
     const [password, setPassword] = useState('')
     const [passwordConf, setPasswordConf] = useState('')
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        if (success) setTimeout(() => router.replace('/'), 5000)
+        if (success) setTimeout(() => router.replace('/login'), 5000)
     },[router, success])
 
     const handleRegistration = (data) => {
@@ -53,7 +54,7 @@ export default function Register() {
                 } else {
                     setError("An unexpected error occurred. Please try again later.");
                 }
-            });
+            }).finally(() => setLoading(false));
         }
     }
 
@@ -94,18 +95,19 @@ export default function Register() {
                     </Typography>
                 </Box>
                 <form autoComplete="off" onSubmit={(event) => {
-                event.preventDefault();
-                const formElements = event.currentTarget.elements;
-                const data = {
-                firstName: formElements.firstName.value,
-                lastName: formElements.lastName.value,
-                email: formElements.email.value,
-                username: formElements.username.value,
-                password: formElements.password.value,
-                passwordConf: formElements.passwordConf.value
-            };
-                handleRegistration(data);
-            }}>
+                    event.preventDefault();
+                    setLoading(true)
+                    const formElements = event.currentTarget.elements;
+                    const data = {
+                        firstName: formElements.firstName.value,
+                        lastName: formElements.lastName.value,
+                        email: formElements.email.value,
+                        username: formElements.username.value,
+                        password: formElements.password.value,
+                        passwordConf: formElements.passwordConf.value
+                    };
+                    handleRegistration(data);
+                }}>
             <FormControl required>
                 <FormLabel>First Name</FormLabel>
                 <Input type="text" name="firstName"/>
@@ -136,7 +138,7 @@ export default function Register() {
                 <Input onChange={(e) => setPasswordConf(e.target.value)} type="password" name="passwordConf"/>
                 {(password !== passwordConf) && <FormHelperText>Passwords must match.</FormHelperText>}
             </FormControl>
-            <Button type="submit" fullWidth>
+            <Button loading={loading} type="submit" fullWidth>
                 Register
             </Button>
         </form>
