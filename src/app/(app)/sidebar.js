@@ -1,7 +1,6 @@
 'use client'
 
 import {
-    AspectRatio,
     List,
     ListItem,
     ListItemButton,
@@ -25,7 +24,6 @@ import {signOut} from "@/app/(app)/utils";
 import Box from "@mui/joy/Box";
 import Image from "next/image";
 import config from "@/resources/config";
-import Typography from "@mui/joy/Typography";
 
 export default function Sidebar() {
     const router = useRouter()
@@ -76,7 +74,7 @@ export default function Sidebar() {
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
-                        <ListItemButton selected={selectedIndex === 1} onClick={() => {
+                        <ListItemButton disabled selected={selectedIndex === 1} onClick={() => {
                             setSelectedIndex(1)
                             router.push('/collections')
                         }}>
@@ -87,7 +85,7 @@ export default function Sidebar() {
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
-                        <ListItemButton selected={selectedIndex === 2} onClick={() => {
+                        <ListItemButton disabled selected={selectedIndex === 2} onClick={() => {
                             setSelectedIndex(2)
                             router.push('/labs')
                         }}>
@@ -98,7 +96,7 @@ export default function Sidebar() {
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
-                        <ListItemButton selected={selectedIndex === 3} onClick={() => {
+                        <ListItemButton disabled selected={selectedIndex === 3} onClick={() => {
                             setSelectedIndex(3)
                             router.push('/maintenance')
                         }}>
@@ -113,7 +111,7 @@ export default function Sidebar() {
                             Admin
                         </ListSubheader>
                         <ListItem>
-                            <ListItemButton selected={selectedIndex === 4} onClick={() => {
+                            <ListItemButton disabled selected={selectedIndex === 4} onClick={() => {
                                 setSelectedIndex(4)
                                 router.push('/admin/approvals')
                             }}>
@@ -124,7 +122,7 @@ export default function Sidebar() {
                             </ListItemButton>
                         </ListItem>
                         <ListItem>
-                            <ListItemButton selected={selectedIndex === 5} onClick={() => {
+                            <ListItemButton disabled selected={selectedIndex === 5} onClick={() => {
                                 setSelectedIndex(5)
                                 router.push('/admin/users')
                             }}>
@@ -139,7 +137,7 @@ export default function Sidebar() {
                         Account
                     </ListSubheader>
                     <ListItem>
-                        <ListItemButton selected={selectedIndex === 6} onClick={() => {
+                        <ListItemButton disabled selected={selectedIndex === 6} onClick={() => {
                             setSelectedIndex(6)
                             router.push('/account/profile')
                         }}>
