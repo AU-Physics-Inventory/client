@@ -5,8 +5,10 @@ import ImageNAImage from "@/resources/image_not_available.png";
 import config from "@/resources/config";
 import {CircularProgress, Modal, ModalClose, ModalDialog, Table} from "@mui/joy";
 import {useState} from "react";
+import {useRouter} from "next/navigation";
 
 export default function ResultsTable(props) {
+    const router = useRouter()
     const [openModal, setOpenModal] = useState(null)
     const [loading, setLoading] = useState(true)
 
@@ -30,7 +32,7 @@ export default function ResultsTable(props) {
             </tr>
             </thead>
             <tbody>
-            {props.data.map((row) => (<tr key={row.id}>
+            {props.data.map((row) => (<tr key={row.id} onClick={() => router.push(`/asset/${row.id}`)}>
                 <td>
                     <Box>
                         <Typography

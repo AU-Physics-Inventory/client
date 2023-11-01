@@ -8,6 +8,15 @@ import Header from "@/app/(app)/header";
 import Box from "@mui/joy/Box";
 import Sidebar from "@/app/(app)/sidebar";
 import {Skeleton} from "@mui/joy";
+import {TOKEN_REQUEST, TOKEN_RESPONSE} from "@/app/utils";
+
+const tokenChannel = new BroadcastChannel('token_channel')
+tokenChannel.postMessage({type: TOKEN_REQUEST, data: null})
+tokenChannel.onmessage = (msg) => {
+    const request = msg.data
+    if (request.type === TOKEN_REQUEST) tokenChannel.postMessage({type: TOKEN_RESPONSE, data: sessionStorage.getItem("token")})
+    else if (request.type === TOKEN_RESPONSE) sessionStorage.setItem('token', request.data)
+}
 
 export default function App({children}) {
     const router = useRouter()

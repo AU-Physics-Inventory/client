@@ -58,29 +58,29 @@ export default function Search(props) {
     const startDecorator = <>
         <>
             <SearchIcon/>
-            <Dropdown>
-                <MenuButton sx={{mx: 0}} slots={{root: IconButton}}
-                            slotProps={{root: {variant: 'plain', color: 'neutral'}}}>
-                    <ExpandMoreIcon/>
-                </MenuButton>
-                <Menu size="sm" sx={{
-                    boxShadow: 'sm',
-                    flexGrow: 0,
-                    minWidth: 200,
-                    maxHeight: 240,
-                    overflow: 'auto',
-                }}>
-                    <Typography
-                        level="body-xs"
-                        textTransform="uppercase"
-                        fontWeight="lg"
-                        sx={{px: 1, py: 0.3}}
-                    >
-                        Filters
-                    </Typography>
-                    {searchOptions.map((option) => <MenuItem key={option.name}>{option.label}</MenuItem>)}
-                </Menu>
-            </Dropdown>
+            {/*<Dropdown>*/}
+            {/*    <MenuButton sx={{mx: 0}} slots={{root: IconButton}}*/}
+            {/*                slotProps={{root: {variant: 'plain', color: 'neutral'}}}>*/}
+            {/*        <ExpandMoreIcon/>*/}
+            {/*    </MenuButton>*/}
+            {/*    <Menu size="sm" sx={{*/}
+            {/*        boxShadow: 'sm',*/}
+            {/*        flexGrow: 0,*/}
+            {/*        minWidth: 200,*/}
+            {/*        maxHeight: 240,*/}
+            {/*        overflow: 'auto',*/}
+            {/*    }}>*/}
+            {/*        <Typography*/}
+            {/*            level="body-xs"*/}
+            {/*            textTransform="uppercase"*/}
+            {/*            fontWeight="lg"*/}
+            {/*            sx={{px: 1, py: 0.3}}*/}
+            {/*        >*/}
+            {/*            Filters*/}
+            {/*        </Typography>*/}
+            {/*        {searchOptions.map((option) => <MenuItem key={option.name}>{option.label}</MenuItem>)}*/}
+            {/*    </Menu>*/}
+            {/*</Dropdown>*/}
         </>
     </>
 

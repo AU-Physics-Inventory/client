@@ -8,13 +8,14 @@ import config from "@/resources/config";
 import Paginator from "@/app/(app)/(home)/paginator-v2";
 import ResultsTable from "@/app/(app)/(home)/table";
 import Search from "@/app/(app)/(home)/search";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import WarningIcon from '@mui/icons-material/Warning';
 import ReportIcon from '@mui/icons-material/Report';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 export default function Home() {
     const router = useRouter()
+    const searchParams = useSearchParams()
     const [data, setData] = useState([])
     const [count, setCount] = useState(1)
     const [pageNumber, setPageNumber] = useState(1)
@@ -41,12 +42,14 @@ export default function Home() {
 
     useEffect(() => {
         const token = sessionStorage.getItem("token")
+        const urlSearchParams = new URLSearchParams(searchParams)
 
         if (token !== null && token.length !== 0) {
             axios.get(config.server.concat('/app/assets'), {
                 headers: {
                     'Authorization': token
-                }
+                },
+                params: urlSearchParams
             }).then((response) => {
                 if (response.status === 200) {
                     setData(response.data.results)
@@ -60,20 +63,18 @@ export default function Home() {
                 }
             })
         } else router.replace('/login')
-    }, [router])
+    }, [router, searchParams])
 
     const search = (offset = 0) => {
-        axios.get(config.server.concat('/app/assets'), {
-            headers: {
-                'Authorization': token
-            },
-            params: {...queryParams.current, offset: offset}
-        }).then((response) => {
-            if (response.status === 200) {
-                setData(response.data.results)
-                setCount(response.data.matchCount)
-            }
-        })
+        setError(null)
+
+        const params = {...queryParams.current, offset: offset}
+        const urlSearchParams = new URLSearchParams()
+        for (let key in params) {
+            urlSearchParams.set(key, params[key])
+        }
+
+        router.push('/?' + urlSearchParams.toString())
         setPageNumber(offset + 1)
     }
 
