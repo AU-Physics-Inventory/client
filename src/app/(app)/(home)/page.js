@@ -21,6 +21,7 @@ export default function Home() {
     const [pageNumber, setPageNumber] = useState(1)
     const [token, setToken] = useState(null)
     const [error, setError] = useState(null)
+    const [filters, setFilters] = useState(new Map())
     const queryParams = useRef({})
 
     const handleError = (message, color) => {
@@ -55,6 +56,8 @@ export default function Home() {
                     setData(response.data.results)
                     setCount(response.data.matchCount)
                     setToken(token)
+                    setPageNumber(parseInt(urlSearchParams.get('offset'), 10) + 1)
+                    setFilters(new Map(urlSearchParams))
                 }
             }).catch((err) => {
                 if (err.response) {
@@ -75,13 +78,12 @@ export default function Home() {
         }
 
         router.push('/?' + urlSearchParams.toString())
-        setPageNumber(offset + 1)
     }
 
     const handleNewSearch = (query, filters) => {
         queryParams.current = {}
-        if (query) queryParams.current.search = query;
-        filters.forEach((value, key) => queryParams.current[key] = value)
+        if (query) queryParams.current.search = query
+        filters.forEach((value, key, map) => queryParams.current[key] = value)
         search(0)
     }
 
@@ -100,7 +102,7 @@ export default function Home() {
         <Box sx={{width: 'auto', height: 1, zIndex: 0}}>
             <Box sx={{height: 'auto'}}>
                 <Box sx={{py: 2, display: 'flex', width: 1}}>
-                    <Search handleSearch={handleNewSearch}/>
+                    <Search handleSearch={handleNewSearch} filters={filters}/>
                 </Box>
             </Box>
             <Sheet sx={{py: 0, overflow: 'auto', height: '0.87'}}>
