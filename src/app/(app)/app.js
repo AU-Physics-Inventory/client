@@ -46,7 +46,7 @@ export default function App({children}) {
             sessionStorage.setItem('redirect', redirectTo)
             router.replace('/login')
         } else setSuccess(true)
-    }, [router])
+    }, [router, pathname, searchParams])
 
     return <>
     {success ? <>
