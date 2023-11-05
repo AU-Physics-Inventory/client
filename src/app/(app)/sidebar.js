@@ -20,10 +20,10 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import {useEffect, useState} from "react";
 import {Buffer} from "buffer";
 import {useRouter} from "next/navigation";
-import {signOut} from "@/app/(app)/utils";
 import Box from "@mui/joy/Box";
 import Image from "next/image";
 import config from "@/resources/config";
+import axios from "axios";
 
 export default function Sidebar() {
     const router = useRouter()
@@ -41,6 +41,20 @@ export default function Sidebar() {
         const jwtPayload = JSON.parse(Buffer.from(storedToken.split('.')[1], 'base64').toString())
         if (jwtPayload.roles.includes('admin')) setAdmin(true)
     }, [router])
+
+    const signOut = () => {
+        console.log('Signing out...')
+        const token = sessionStorage.getItem('token')
+        axios.post(config.server.concat('/logout'), null, {
+            headers: {
+                'Authorization': token
+            }
+        }).then(() => {})
+            .catch(() => {})
+
+        sessionStorage.removeItem('token')
+        router.replace('/login')
+    }
 
     return <Sheet color="primary" variant="soft" sx={{
         width: 'auto',
@@ -150,7 +164,7 @@ export default function Sidebar() {
                     <ListItem>
                         <ListItemButton selected={selectedIndex === 7} onClick={() => {
                             setSelectedIndex(7)
-                            signOut(router)
+                            signOut()
                         }}>
                             <ListItemDecorator>
                                 <ExitToAppIcon />

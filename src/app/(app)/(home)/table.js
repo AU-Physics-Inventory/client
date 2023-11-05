@@ -5,8 +5,10 @@ import ImageNAImage from "@/resources/image_not_available.png";
 import config from "@/resources/config";
 import {CircularProgress, Modal, ModalClose, ModalDialog, Table} from "@mui/joy";
 import {useState} from "react";
+import {useRouter} from "next/navigation";
 
 export default function ResultsTable(props) {
+    const router = useRouter()
     const [openModal, setOpenModal] = useState(null)
     const [loading, setLoading] = useState(true)
 
@@ -34,12 +36,17 @@ export default function ResultsTable(props) {
                 <td>
                     <Box>
                         <Typography
+                            onClick={(event) => {
+                                if (event.target.id !== 'image-' + row.id) router.push(`/asset/${id}`)
+                            }}
+                            sx={{cursor: 'pointer'}}
                             startDecorator={
                                 <Image alt="Item image"
                                        src={row.images === null ? ImageNAImage : config.spaces.concat('/images/').concat(row.images[0])}
                                        width={64}
                                        height={64}
                                        style={{cursor: 'pointer'}}
+                                       id={'image-' + row.id}
                                        onClick={() => {setOpenModal(row.id); setLoading(true)}}
                                 />}>
                             {row.name}
@@ -53,6 +60,7 @@ export default function ResultsTable(props) {
                         </Modal>
                     </Box>
                 </td>
+                {/*<td style={{cursor: 'pointer'}} onClick={() => router.push(`/?location=${row.location}`)}>{row.location}</td>*/}
                 <td>{row.location}</td>
                 <td>
                     <Box sx={{display: 'flex-inline'}}>

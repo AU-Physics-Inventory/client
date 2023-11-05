@@ -8,15 +8,14 @@ import Sidebar from "@/app/(app)/sidebar";
 import Header from "@/app/(app)/header";
 
 export const metadata = {
-    title: 'Physics Inventory', description: 'AU Physics Inventory Management',
+    title: 'Physics Inventory',
+    description: 'AU Physics Inventory Management',
+    viewport: 'initial-scale=1, width=device-width'
 }
 
 export default function AppLayout({children}) {
     return <CssVarsProvider>
             <CssBaseline/>
-				<Head>
-					<meta name="viewport" content="initial-scale=1, width=device-width"/>
-				</Head>
 				{children}
         </CssVarsProvider>
 }
