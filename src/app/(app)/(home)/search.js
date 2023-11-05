@@ -2,11 +2,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import {
     Chip,
     ChipDelete,
-    Dropdown,
     IconButton,
-    Menu,
-    MenuButton,
-    MenuItem,
     Modal,
     ModalClose,
     ModalDialog,
@@ -14,7 +10,6 @@ import {
 } from "@mui/joy";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import Input from "@mui/joy/Input";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from "@mui/joy/Typography";
 import {useState} from "react";
 import Box from "@mui/joy/Box";
@@ -22,15 +17,12 @@ import {DialogTitle} from "@mui/material";
 import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
 import Button from "@mui/joy/Button";
+import {FILTER_UPDATE, QUERY_UPDATE} from "@/app/(app)/utils";
 
 
 export default function Search(props) {
-    const [query, setQuery] = useState('')
     const [openModal, setOpenModal] = useState(null)
-
-    const handleFilterSelection = (newFilterState) => {
-        props.handleSearch(query, newFilterState)
-    }
+    const [query, setQuery] = props.queryState
 
     const searchOptions = [
         {label: "Location", name: "location"},
@@ -46,40 +38,13 @@ export default function Search(props) {
 
     const endDecorator = <>
         <>
-            <IconButton onClick={() => props.handleSearch(query, props.filters)}>
+            <IconButton onClick={() => props.handleSearch(QUERY_UPDATE)}>
                 <KeyboardReturnIcon/>
             </IconButton>
         </>
     </>
 
-    const startDecorator = <>
-        <>
-            <SearchIcon/>
-            {/*<Dropdown>*/}
-            {/*    <MenuButton sx={{mx: 0}} slots={{root: IconButton}}*/}
-            {/*                slotProps={{root: {variant: 'plain', color: 'neutral'}}}>*/}
-            {/*        <ExpandMoreIcon/>*/}
-            {/*    </MenuButton>*/}
-            {/*    <Menu size="sm" sx={{*/}
-            {/*        boxShadow: 'sm',*/}
-            {/*        flexGrow: 0,*/}
-            {/*        minWidth: 200,*/}
-            {/*        maxHeight: 240,*/}
-            {/*        overflow: 'auto',*/}
-            {/*    }}>*/}
-            {/*        <Typography*/}
-            {/*            level="body-xs"*/}
-            {/*            textTransform="uppercase"*/}
-            {/*            fontWeight="lg"*/}
-            {/*            sx={{px: 1, py: 0.3}}*/}
-            {/*        >*/}
-            {/*            Filters*/}
-            {/*        </Typography>*/}
-            {/*        {searchOptions.map((option) => <MenuItem key={option.name}>{option.label}</MenuItem>)}*/}
-            {/*    </Menu>*/}
-            {/*</Dropdown>*/}
-        </>
-    </>
+    const startDecorator = <SearchIcon />
 
     return <>
         <Stack sx={{mx: 'auto', width: 0.6}}>
@@ -88,7 +53,8 @@ export default function Search(props) {
                    endDecorator={endDecorator}
                    placeholder='Type something...'
                    onChange={(event) => setQuery(event.target.value)}
-                   onKeyUp={(event) => {if (event.key === 'Enter') props.handleSearch(query, props.filters)}}
+                   onKeyUp={(event) => {if (event.key === 'Enter') props.handleSearch(QUERY_UPDATE)}}
+                   value={query}
             />
             <Box sx={{my: 0.7, display: 'flex', mx: 'auto', maxWidth: 1}}>
                 <Typography
@@ -100,7 +66,7 @@ export default function Search(props) {
                     Filters
                 </Typography>
                 <Box sx={{overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap', display: 'grid', gridAutoFlow: 'column', gap: 1}}>
-                    {searchOptions.map((option) => <Chip onClick={() => setOpenModal(option.name)} size="md" color="primary" variant={props.filters.has(option.name) ? "solid" : "soft"} key={option.name} endDecorator={props.filters.has(option.name) && <ChipDelete onDelete={() => {props.filters.delete(option.name); handleFilterSelection(props.filters)}} />}>{option.label}
+                    {searchOptions.map((option) => <Chip onClick={() => setOpenModal(option.name)} size="md" color="primary" variant={props.filters.has(option.name) ? "solid" : "soft"} key={option.name} endDecorator={props.filters.has(option.name) && <ChipDelete onDelete={() => {props.filters.delete(option.name); props.handleSearch(FILTER_UPDATE)}} />}>{option.label}
                         <Modal open={openModal === option.name} onClose={() => setOpenModal(null)}>
                             <ModalDialog>
                                 <ModalClose />
@@ -108,7 +74,8 @@ export default function Search(props) {
                                 <form
                                     onSubmit={(event) => {
                                         event.preventDefault();
-                                        handleFilterSelection(props.filters.set(option.name, event.currentTarget.elements.inputField.value))
+                                        props.filters.set(option.name, event.currentTarget.elements.inputField.value)
+                                        props.handleSearch(FILTER_UPDATE)
                                         setOpenModal(false);
                                     }}
                                     autoComplete="off"

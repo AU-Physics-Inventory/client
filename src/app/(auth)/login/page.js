@@ -39,12 +39,12 @@ export default function SignIn() {
             username: data.username,
             password: data.password
         }).then((response) => {
-            if (data.persistent) {
-                sessionStorage.setItem('username', data.username)
-            }
-
+            if (data.persistent) sessionStorage.setItem('username', data.username)
             sessionStorage.setItem('token', response.data.token);
-            router.replace('/')
+            const redirect = sessionStorage.getItem('redirect')
+            sessionStorage.removeItem('redirect')
+            if (redirect !== null) router.replace(redirect)
+            else router.replace('/')
         }).catch((err) => {
             logtail.error('Unsuccessful login attempt.')
 

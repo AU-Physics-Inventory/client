@@ -12,6 +12,7 @@ import {useRouter, useSearchParams} from "next/navigation";
 import WarningIcon from '@mui/icons-material/Warning';
 import ReportIcon from '@mui/icons-material/Report';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import {QUERY_UPDATE} from "@/app/(app)/utils";
 
 export default function Home() {
     const router = useRouter()
@@ -20,8 +21,8 @@ export default function Home() {
     const [count, setCount] = useState(1)
     const [pageNumber, setPageNumber] = useState(1)
     const [error, setError] = useState(null)
+    const [query, setQuery] = useState('')
     const [filters, setFilters] = useState(new Map())
-    const queryParams = useRef({})
 
     const handleError = (message, color) => {
         let icon;
@@ -57,6 +58,7 @@ export default function Home() {
                     setCount(response.data.matchCount)
                     setPageNumber(parseInt(urlSearchParams.get('offset'), 10) + 1)
                     setFilters(new Map(urlSearchParams))
+                    setQuery(urlSearchParams.has('search') ? urlSearchParams.get('search') : '')
                 }
             }).catch((err) => {
                 if (err.response) {
@@ -69,20 +71,16 @@ export default function Home() {
 
     const search = (offset = 0) => {
         setError(null)
-
-        const params = {...queryParams.current, offset: offset}
-        const urlSearchParams = new URLSearchParams()
-        for (let key in params) {
-            urlSearchParams.set(key, params[key])
-        }
-
-        router.push('/?' + urlSearchParams.toString())
+        filters.set('offset', offset)
+        router.push('/?' + new URLSearchParams(filters).toString())
     }
 
-    const handleNewSearch = (query, filters) => {
-        queryParams.current = {}
-        if (query) queryParams.current.search = query
-        filters.forEach((value, key, map) => queryParams.current[key] = value)
+    const handleSearchTrigger = (updateType) => {
+        if (updateType === QUERY_UPDATE) {
+            if (query === '' || query == null) filters.delete('search')
+            else filters.set('search', query)
+        }
+
         search(0)
     }
 
@@ -101,7 +99,7 @@ export default function Home() {
         <Box sx={{width: 'auto', height: 1, zIndex: 0}}>
             <Box sx={{height: 'auto'}}>
                 <Box sx={{py: 2, display: 'flex', width: 1}}>
-                    <Search handleSearch={handleNewSearch} filters={filters}/>
+                    <Search queryState={[query, setQuery]} handleSearch={handleSearchTrigger} filters={filters}/>
                 </Box>
             </Box>
             <Sheet sx={{py: 0, overflow: 'auto', height: '0.87'}}>
