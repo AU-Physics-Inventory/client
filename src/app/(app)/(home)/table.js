@@ -32,16 +32,21 @@ export default function ResultsTable(props) {
             </tr>
             </thead>
             <tbody>
-            {props.data.map((row) => (<tr key={row.id} onClick={() => router.push(`/asset/${row.id}`)}>
+            {props.data.map((row) => (<tr key={row.id}>
                 <td>
                     <Box>
                         <Typography
+                            onClick={(event) => {
+                                if (event.target.id !== 'image-' + row.id) router.push(`/asset/${id}`)
+                            }}
+                            sx={{cursor: 'pointer'}}
                             startDecorator={
                                 <Image alt="Item image"
                                        src={row.images === null ? ImageNAImage : config.spaces.concat('/images/').concat(row.images[0])}
                                        width={64}
                                        height={64}
                                        style={{cursor: 'pointer'}}
+                                       id={'image-' + row.id}
                                        onClick={() => {setOpenModal(row.id); setLoading(true)}}
                                 />}>
                             {row.name}
@@ -55,6 +60,7 @@ export default function ResultsTable(props) {
                         </Modal>
                     </Box>
                 </td>
+                {/*<td style={{cursor: 'pointer'}} onClick={() => router.push(`/?location=${row.location}`)}>{row.location}</td>*/}
                 <td>{row.location}</td>
                 <td>
                     <Box sx={{display: 'flex-inline'}}>

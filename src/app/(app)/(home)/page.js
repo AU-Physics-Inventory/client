@@ -8,7 +8,7 @@ import config from "@/resources/config";
 import Paginator from "@/app/(app)/(home)/paginator-v2";
 import ResultsTable from "@/app/(app)/(home)/table";
 import Search from "@/app/(app)/(home)/search";
-import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import WarningIcon from '@mui/icons-material/Warning';
 import ReportIcon from '@mui/icons-material/Report';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -19,7 +19,6 @@ export default function Home() {
     const [data, setData] = useState([])
     const [count, setCount] = useState(1)
     const [pageNumber, setPageNumber] = useState(1)
-    const [token, setToken] = useState(null)
     const [error, setError] = useState(null)
     const [filters, setFilters] = useState(new Map())
     const queryParams = useRef({})
@@ -44,6 +43,7 @@ export default function Home() {
     useEffect(() => {
         const token = sessionStorage.getItem("token")
         const urlSearchParams = new URLSearchParams(searchParams)
+        if (!urlSearchParams.has('offset')) urlSearchParams.set('offset', '0')
 
         if (token !== null && token.length !== 0) {
             axios.get(config.server.concat('/app/assets'), {
@@ -55,7 +55,6 @@ export default function Home() {
                 if (response.status === 200) {
                     setData(response.data.results)
                     setCount(response.data.matchCount)
-                    setToken(token)
                     setPageNumber(parseInt(urlSearchParams.get('offset'), 10) + 1)
                     setFilters(new Map(urlSearchParams))
                 }
