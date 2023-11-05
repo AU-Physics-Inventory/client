@@ -37,7 +37,7 @@ export default function ResultsTable(props) {
                     <Box>
                         <Typography
                             onClick={(event) => {
-                                if (event.target.id !== 'image-' + row.id) router.push(`/asset/${id}`)
+                                if (event.target.id !== 'image-' + row.id) router.push(`/asset/${row.id}`)
                             }}
                             sx={{cursor: 'pointer'}}
                             startDecorator={
