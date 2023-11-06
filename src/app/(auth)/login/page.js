@@ -118,7 +118,7 @@ export default function SignIn() {
                             Physics Inventory
                         </Typography>
                     </Box>
-                    {alert && <Alert sx={{zIndex: 2, justifyContent: 'center', position: 'relative'}} color="danger" size="md">You have been automatically signed out due to a period of inactivity.</Alert>}
+                    {alert && <Alert sx={{zIndex: 2, justifyContent: 'center', position: 'relative'}} color="danger" size="md">Please sign in to complete this action.</Alert>}
                     <Box
                         component="main"
                         sx={{
