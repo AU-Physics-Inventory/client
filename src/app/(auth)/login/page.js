@@ -16,21 +16,23 @@ import config from "@/resources/config";
 import axios from "axios";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
-import { Logtail } from "@logtail/browser";
-
-const logtail = new Logtail("eNj5LdqqzBcfnBbDFBEZmfEf");
+import {Alert} from "@mui/joy";
 
 export default function SignIn() {
     const router = useRouter()
     const [username, setUsername] = useState('')
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [alert, setAlert] = useState(false)
 
     useEffect(() => {
         const storedUsername = sessionStorage.getItem('username');
         if (storedUsername !== null && storedUsername.length !== 0) {
             setUsername(storedUsername);
         }
+
+        const token = sessionStorage.getItem('token')
+        if (token !== null && token.length > 0) setAlert(true)
     }, [])
 
     const handleSignIn = (data) => {
@@ -46,28 +48,12 @@ export default function SignIn() {
             if (redirect !== null) router.replace(redirect)
             else router.replace('/')
         }).catch((err) => {
-            logtail.error('Unsuccessful login attempt.')
-
             if (err.response) {
-                if (err.response.status === 401) {
-                    setError("Incorrect username or password. Please try again.");
-                } else if (err.response.status === 403) {
-                    setError(err.response.data.message)
-                } else {
-                    setError("An unexpected error occurred. Please try again later.");
-                }
-                logtail.error(error)
-            } else if (err.request) {
-                logtail.error('Request was made but no response')
-                logtail.error(err)
-                setError("Something isn't working right now... Please try again later.");
-            } else {
-                logtail.error('Request was not made')
-                logtail.error(err.message)
-                setError("Yikes! We're having trouble fulfilling your request right now. Please try again later.");
-            }
-
-            logtail.flush()
+                if (err.response.status === 401) setError("Incorrect username or password. Please try again.");
+                else if (err.response.status === 403) setError(err.response.data.message)
+                else setError("An unexpected error occurred. Please try again later.");
+            } else if (err.request) setError("Something isn't working right now... Please try again later.");
+            else setError("Yikes! We're having trouble fulfilling your request right now. Please try again later.");
         }).finally(() => setLoading(false))
     }
 
@@ -132,6 +118,7 @@ export default function SignIn() {
                             Physics Inventory
                         </Typography>
                     </Box>
+                    {alert && <Alert sx={{zIndex: 2, justifyContent: 'center', position: 'relative'}} color="danger" size="md">You have been automatically signed out due to a period of inactivity.</Alert>}
                     <Box
                         component="main"
                         sx={{

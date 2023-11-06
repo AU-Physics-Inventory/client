@@ -1,9 +1,8 @@
 import Button from "@mui/joy/Button";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import Box from "@mui/joy/Box";
-import {IconButton, Sheet} from "@mui/joy";
+import {Sheet} from "@mui/joy";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import {useState} from "react";
 
 export default function Paginator(props) {
     const maxPageNumber = Math.ceil(props.count / 25)

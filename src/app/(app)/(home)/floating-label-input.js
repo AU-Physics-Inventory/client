@@ -1,7 +1,7 @@
 // Source obtained from https://mui.com/joy-ui/react-input/#system-FloatingLabelInput.js
 
 import * as React from 'react';
-import { styled } from '@mui/joy/styles';
+import {styled} from '@mui/joy/styles';
 import Input from '@mui/joy/Input';
 import CircleIcon from '@mui/icons-material/Circle';
 

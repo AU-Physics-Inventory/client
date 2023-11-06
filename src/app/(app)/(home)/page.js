@@ -2,7 +2,7 @@
 
 import Box from "@mui/joy/Box";
 import {Alert, IconButton, Sheet} from "@mui/joy";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import config from "@/resources/config";
 import Paginator from "@/app/(app)/(home)/paginator-v2";
