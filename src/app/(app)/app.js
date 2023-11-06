@@ -26,7 +26,14 @@ export default function App({children}) {
 
     useEffect(() => {
         const token = sessionStorage.getItem("token")
-        let redirect = false
+        const performRedirection = (shouldRedirect) => {
+            if (shouldRedirect) {
+                const searchParamsString = searchParams.toString()
+                const redirectTo = searchParamsString === '' ? pathname : pathname + '?' + searchParamsString
+                sessionStorage.setItem('redirect', redirectTo)
+                router.replace('/login')
+            } else setSuccess(true)
+        }
 
         if (token !== null && token.length !== 0) {
             axios.get(config.server.concat('/validate'), {
@@ -34,18 +41,11 @@ export default function App({children}) {
                     'Authorization': token
                 }
             }).then((response) => {
-                redirect = !(response.status === 200)
+                performRedirection(!(response.status === 200))
             }).catch((err) => {
-                redirect = true
+                performRedirection(true)
             })
-        } else redirect = true
-
-        if (redirect) {
-            const searchParamsString = searchParams.toString()
-            const redirectTo = searchParamsString === '' ? pathname : pathname + '?' + searchParamsString
-            sessionStorage.setItem('redirect', redirectTo)
-            router.replace('/login')
-        } else setSuccess(true)
+        } else performRedirection(true)
     }, [router, pathname, searchParams])
 
     return <>
