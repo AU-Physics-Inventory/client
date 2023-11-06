@@ -1,14 +1,6 @@
 'use client'
 
-import {
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemContent,
-    ListItemDecorator,
-    ListSubheader,
-    Sheet
-} from "@mui/joy";
+import {List, ListItem, ListItemButton, ListItemContent, ListItemDecorator, ListSubheader, Sheet} from "@mui/joy";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import ScienceIcon from "@mui/icons-material/Science";
