@@ -17,6 +17,7 @@ import axios from "axios";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import { Logtail } from "@logtail/browser";
+import {Alert} from "@mui/joy";
 
 const logtail = new Logtail("eNj5LdqqzBcfnBbDFBEZmfEf");
 
@@ -25,12 +26,16 @@ export default function SignIn() {
     const [username, setUsername] = useState('')
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [alert, setAlert] = useState(false)
 
     useEffect(() => {
         const storedUsername = sessionStorage.getItem('username');
         if (storedUsername !== null && storedUsername.length !== 0) {
             setUsername(storedUsername);
         }
+
+        const token = sessionStorage.getItem('token')
+        if (token !== null && token.length > 0) setAlert(true)
     }, [])
 
     const handleSignIn = (data) => {
@@ -132,6 +137,7 @@ export default function SignIn() {
                             Physics Inventory
                         </Typography>
                     </Box>
+                    {alert && <Alert sx={{zIndex: 2, justifyContent: 'center', position: 'relative'}} color="danger" size="md">You have been automatically signed out due to a period of inactivity.</Alert>}
                     <Box
                         component="main"
                         sx={{
