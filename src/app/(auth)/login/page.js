@@ -26,7 +26,7 @@ export default function SignIn() {
     const [alert, setAlert] = useState(false)
 
     useEffect(() => {
-        const storedUsername = sessionStorage.getItem('username');
+        const storedUsername = localStorage.getItem('username');
         if (storedUsername !== null && storedUsername.length !== 0) {
             setUsername(storedUsername);
         }
@@ -41,7 +41,7 @@ export default function SignIn() {
             username: data.username,
             password: data.password
         }).then((response) => {
-            if (data.persistent) sessionStorage.setItem('username', data.username)
+            if (data.persistent) localStorage.setItem('username', data.username)
             sessionStorage.setItem('token', response.data.token);
             const redirect = sessionStorage.getItem('redirect')
             sessionStorage.removeItem('redirect')
