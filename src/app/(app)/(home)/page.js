@@ -1,18 +1,16 @@
 'use client'
 
 import Box from "@mui/joy/Box";
-import {Alert, IconButton, Sheet} from "@mui/joy";
-import {useEffect, useState} from "react";
 import axios from "axios";
 import config from "@/resources/config";
+import {Sheet} from "@mui/joy";
+import {QUERY_UPDATE} from "@/app/(app)/utils";
+import {useEffect, useState} from "react";
 import Paginator from "@/app/(app)/(home)/paginator-v2";
 import ResultsTable from "@/app/(app)/(home)/table";
 import Search from "@/app/(app)/(home)/search";
 import {useRouter, useSearchParams} from "next/navigation";
-import WarningIcon from '@mui/icons-material/Warning';
-import ReportIcon from '@mui/icons-material/Report';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import {QUERY_UPDATE} from "@/app/(app)/utils";
+import Error from "@/app/(app)/error"
 
 export default function Home() {
     const router = useRouter()
@@ -24,20 +22,7 @@ export default function Home() {
     const [query, setQuery] = useState('')
     const [filters, setFilters] = useState(new Map())
 
-    const handleError = (message, color) => {
-        let icon;
-        switch (color) {
-            case 'danger':
-                icon = <ReportIcon />
-                break;
-            case 'warning':
-                icon = <WarningIcon />
-                break;
-            default:
-                icon = null;
-                break;
-        }
-
+    const handleError = (message, color, icon = null) => {
         setError({message: message, color: color, icon: icon})
     }
 
@@ -93,9 +78,7 @@ export default function Home() {
     }
 
     return <>
-        <Box sx={{zIndex: 1, position: 'absolute'}}>
-            {error && <Alert variant="soft" color={error.color} startDecorator={error.icon} endDecorator={<IconButton variant="soft" color={error.color} onClick={() => setError(null)}><CloseRoundedIcon /></IconButton>}>{error.message}</Alert>}
-        </Box>
+        <Error error={error} clearError={() => setError(null)} />
         <Box sx={{width: 'auto', height: 1, zIndex: 0}}>
             <Box sx={{height: 'auto'}}>
                 <Box sx={{py: 2, display: 'flex', width: 1}}>
