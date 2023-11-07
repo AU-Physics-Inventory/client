@@ -69,7 +69,7 @@ export default function SignIn() {
                 }}
             />
             <Box
-                sx={(theme) => ({
+                sx={{
                     width: 'clamp(100vw - var(--Cover-width), (var(--Collapsed-breakpoint) - 100vw) * 999, 100vw)',
                     transition: 'width var(--Transition-duration)',
                     transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
@@ -79,7 +79,7 @@ export default function SignIn() {
                     justifyContent: 'flex-end',
                     backdropFilter: 'blur(4px)',
                     backgroundColor: 'rgba(255 255 255 / 0.6)',
-                })}
+                }}
             >
                 <Box
                     sx={{
@@ -201,7 +201,7 @@ export default function SignIn() {
                 </Box>
             </Box>
             <Box
-                sx={(theme) => ({
+                sx={{
                     height: '100%',
                     position: 'fixed',
                     right: 0,
@@ -215,7 +215,7 @@ export default function SignIn() {
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
                     backgroundImage: `url('${config.spaces.concat('/logos/B_Physics Inventory-03.png')}')`
-                })}
+                }}
             />
         </CssVarsProvider>);
 }

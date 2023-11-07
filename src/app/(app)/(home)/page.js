@@ -6,10 +6,10 @@ import config from "@/resources/config";
 import {Sheet} from "@mui/joy";
 import {QUERY_UPDATE} from "@/app/(app)/utils";
 import {useEffect, useState} from "react";
+import {useRouter, useSearchParams} from "next/navigation";
 import Paginator from "@/app/(app)/(home)/paginator-v2";
 import ResultsTable from "@/app/(app)/(home)/table";
 import Search from "@/app/(app)/(home)/search";
-import {useRouter, useSearchParams} from "next/navigation";
 import Error from "@/app/(app)/error"
 
 export default function Home() {
