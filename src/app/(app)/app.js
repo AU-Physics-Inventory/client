@@ -41,6 +41,8 @@ export default function App({children}) {
                     'Authorization': token
                 }
             }).then((response) => {
+                if (response.status === 200 && response.headers.has('X-Token-Renewal'))
+                    sessionStorage.setItem('token', response.headers.get('X-Token-Renewal'))
                 performRedirection(!(response.status === 200))
             }).catch((err) => {
                 performRedirection(true)
