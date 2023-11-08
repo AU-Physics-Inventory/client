@@ -26,7 +26,7 @@ export default function SignIn() {
     const [alert, setAlert] = useState(false)
 
     useEffect(() => {
-        const storedUsername = sessionStorage.getItem('username');
+        const storedUsername = localStorage.getItem('username');
         if (storedUsername !== null && storedUsername.length !== 0) {
             setUsername(storedUsername);
         }
@@ -41,7 +41,7 @@ export default function SignIn() {
             username: data.username,
             password: data.password
         }).then((response) => {
-            if (data.persistent) sessionStorage.setItem('username', data.username)
+            if (data.persistent) localStorage.setItem('username', data.username)
             sessionStorage.setItem('token', response.data.token);
             const redirect = sessionStorage.getItem('redirect')
             sessionStorage.removeItem('redirect')
@@ -69,7 +69,7 @@ export default function SignIn() {
                 }}
             />
             <Box
-                sx={(theme) => ({
+                sx={{
                     width: 'clamp(100vw - var(--Cover-width), (var(--Collapsed-breakpoint) - 100vw) * 999, 100vw)',
                     transition: 'width var(--Transition-duration)',
                     transitionDelay: 'calc(var(--Transition-duration) + 0.1s)',
@@ -79,7 +79,7 @@ export default function SignIn() {
                     justifyContent: 'flex-end',
                     backdropFilter: 'blur(4px)',
                     backgroundColor: 'rgba(255 255 255 / 0.6)',
-                })}
+                }}
             >
                 <Box
                     sx={{
@@ -118,7 +118,7 @@ export default function SignIn() {
                             Physics Inventory
                         </Typography>
                     </Box>
-                    {alert && <Alert sx={{zIndex: 2, justifyContent: 'center', position: 'relative'}} color="danger" size="md">You have been automatically signed out due to a period of inactivity.</Alert>}
+                    {alert && <Alert sx={{zIndex: 2, justifyContent: 'center', position: 'relative'}} color="danger" size="md">Please sign in to complete this action.</Alert>}
                     <Box
                         component="main"
                         sx={{
@@ -201,7 +201,7 @@ export default function SignIn() {
                 </Box>
             </Box>
             <Box
-                sx={(theme) => ({
+                sx={{
                     height: '100%',
                     position: 'fixed',
                     right: 0,
@@ -215,7 +215,7 @@ export default function SignIn() {
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
                     backgroundImage: `url('${config.spaces.concat('/logos/B_Physics Inventory-03.png')}')`
-                })}
+                }}
             />
         </CssVarsProvider>);
 }
