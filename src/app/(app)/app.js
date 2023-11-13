@@ -55,7 +55,7 @@ export default function App({children}) {
         <Header />
         <Box sx={{display: 'flex', height: '100vh', width: '100vw'}}>
             <Sidebar/>
-            <Box sx={{p: 3, width: 'auto'}}>
+            <Box sx={{flex: 1, p: 3, width: 'auto'}}>
                 {children}
             </Box>
         </Box>
