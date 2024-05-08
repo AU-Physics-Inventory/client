@@ -13,8 +13,12 @@ export default function Cell(props) {
         else setSx({display: 'none'})
     }
 
+    const handleClick = () => {
+        navigator.clipboard.writeText(props.value);
+    }
+
     return <td>
-        <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', flex: 1}} onMouseEnter={() => showCopyImage(true)} onMouseLeave={() => showCopyImage(false)} onClick={() => navigator.clipboard.writeText(props.value)}>
+        <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', flex: 1}} onMouseEnter={() => showCopyImage(true)} onMouseLeave={() => showCopyImage(false)} onClick={handleClick}>
             <Typography>
                 <Typography sx={{fontWeight: 'bold'}} variant='soft' color={'neutral'}>
                     {props.name}:

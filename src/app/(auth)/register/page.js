@@ -58,103 +58,105 @@ export default function Register() {
         }
     }
 
-    return <CssVarsProvider>
-        <CssBaseline/>
-        <GlobalStyles
-            styles={{
-                ':root': {
-                    '--Collapsed-breakpoint': '769px', // form will stretch when viewport is below `769px`
-                    '--Cover-width': '40vw', // must be `vw` only
-                    '--Form-maxWidth': '700px', '--Transition-duration': '0.4s', // set to `none` to disable transition
-                },
-            }}
-        />
-        <Sheet color="neutral" variant="soft" component="main"
-               sx={{
-                   my: 'auto',
-                   py: 3,
-                   pb: 5,
-                   display: 'flex',
-                   flexDirection: 'column',
-                   gap: 5,
-                   width: 400,
-                   maxWidth: '100%',
-                   mx: 'auto',
-                   borderRadius: 'sm',
-                   '& form': {
-                       display: 'flex', flexDirection: 'column', gap: 2,
-                   },
-                   [`& .${formLabelClasses.asterisk}`]: {
-                       visibility: 'hidden',
-                   },
-               }}>
-            {!success ? <Box sx={{w: 1}}>
-                <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                    <Typography component="h1" fontSize="xl2" fontWeight="lg" sx={{mx: 'auto'}}>
-                        Register a new account
-                    </Typography>
-                </Box>
-                <form autoComplete="off" onSubmit={(event) => {
-                    event.preventDefault();
-                    setLoading(true)
-                    const formElements = event.currentTarget.elements;
-                    const data = {
-                        firstName: formElements.firstName.value,
-                        lastName: formElements.lastName.value,
-                        email: formElements.email.value,
-                        username: formElements.username.value,
-                        password: formElements.password.value,
-                        passwordConf: formElements.passwordConf.value
-                    };
-                    handleRegistration(data);
-                }}>
-            <FormControl required>
-                <FormLabel>First Name</FormLabel>
-                <Input type="text" name="firstName"/>
-            </FormControl>
-            <FormControl required>
-                <FormLabel>Last Name</FormLabel>
-                <Input type="text" name="lastName"/>
-            </FormControl>
-            <FormControl required>
-                <FormLabel>E-mail</FormLabel>
-                <Input type="email" name="email"/>
-            </FormControl>
-            <FormControl required>
-                <FormLabel>Username</FormLabel>
-                <Input type="text"
-                       name="username"
-                       onChange={(event) => setUsername(event.target.value)}
-                       error={!/^[0-9a-z]*$/i.test(username)}
-                />
-            </FormControl>
-            <FormControl error={password !== passwordConf} required>
-                <FormLabel>Password</FormLabel>
-                <Input onChange={(e) => setPassword(e.target.value)} type="password" name="password"/>
-                <Typography level="body-xs">8-20 characters. Must include at least one uppercase letter, one lowercase letter, one number, and one symbol.</Typography>
-            </FormControl>
-            <FormControl error={password !== passwordConf} required>
-                <FormLabel>Confirm Password</FormLabel>
-                <Input onChange={(e) => setPasswordConf(e.target.value)} type="password" name="passwordConf"/>
-                {(password !== passwordConf) && <FormHelperText>Passwords must match.</FormHelperText>}
-            </FormControl>
-            <Button loading={loading} type="submit" fullWidth>
-                Register
-            </Button>
-        </form>
-        {error && <Typography color="danger"
-                              level="body-sm"
-                              variant="soft"
-                              sx={{my: 1, mb: 3, mx: 'auto', gap: 5}}>
-        {error}
-    </Typography>}</Box> : <Box sx={{my: 3, display: 'flex', flexDirection: 'column'}}>
-                <Typography component="h1" fontSize="xl2" fontWeight="lg" sx={{mx: 'auto'}}>
-                    Thank you for registering
-                </Typography>
-                <Typography level="body-lg">
-                    Please check your email for a confirmation link
-                </Typography>
-            </Box>}
-        </Sheet>
-    </CssVarsProvider>
+    return <></>
+
+    // return <CssVarsProvider>
+    //     <CssBaseline/>
+    //     <GlobalStyles
+    //         styles={{
+    //             ':root': {
+    //                 '--Collapsed-breakpoint': '769px', // form will stretch when viewport is below `769px`
+    //                 '--Cover-width': '40vw', // must be `vw` only
+    //                 '--Form-maxWidth': '700px', '--Transition-duration': '0.4s', // set to `none` to disable transition
+    //             },
+    //         }}
+    //     />
+    //     <Sheet color="neutral" variant="soft" component="main"
+    //            sx={{
+    //                my: 'auto',
+    //                py: 3,
+    //                pb: 5,
+    //                display: 'flex',
+    //                flexDirection: 'column',
+    //                gap: 5,
+    //                width: 400,
+    //                maxWidth: '100%',
+    //                mx: 'auto',
+    //                borderRadius: 'sm',
+    //                '& form': {
+    //                    display: 'flex', flexDirection: 'column', gap: 2,
+    //                },
+    //                [`& .${formLabelClasses.asterisk}`]: {
+    //                    visibility: 'hidden',
+    //                },
+    //            }}>
+    //         {!success ? <Box sx={{w: 1}}>
+    //             <Box sx={{display: 'flex', flexDirection: 'column'}}>
+    //                 <Typography component="h1" fontSize="xl2" fontWeight="lg" sx={{mx: 'auto'}}>
+    //                     Register a new account
+    //                 </Typography>
+    //             </Box>
+    //             <form autoComplete="off" onSubmit={(event) => {
+    //                 event.preventDefault();
+    //                 setLoading(true)
+    //                 const formElements = event.currentTarget.elements;
+    //                 const data = {
+    //                     firstName: formElements.firstName.value,
+    //                     lastName: formElements.lastName.value,
+    //                     email: formElements.email.value,
+    //                     username: formElements.username.value,
+    //                     password: formElements.password.value,
+    //                     passwordConf: formElements.passwordConf.value
+    //                 };
+    //                 handleRegistration(data);
+    //             }}>
+    //         <FormControl required>
+    //             <FormLabel>First Name</FormLabel>
+    //             <Input type="text" name="firstName"/>
+    //         </FormControl>
+    //         <FormControl required>
+    //             <FormLabel>Last Name</FormLabel>
+    //             <Input type="text" name="lastName"/>
+    //         </FormControl>
+    //         <FormControl required>
+    //             <FormLabel>E-mail</FormLabel>
+    //             <Input type="email" name="email"/>
+    //         </FormControl>
+    //         <FormControl required>
+    //             <FormLabel>Username</FormLabel>
+    //             <Input type="text"
+    //                    name="username"
+    //                    onChange={(event) => setUsername(event.target.value)}
+    //                    error={!/^[0-9a-z]*$/i.test(username)}
+    //             />
+    //         </FormControl>
+    //         <FormControl error={password !== passwordConf} required>
+    //             <FormLabel>Password</FormLabel>
+    //             <Input onChange={(e) => setPassword(e.target.value)} type="password" name="password"/>
+    //             <Typography level="body-xs">8-20 characters. Must include at least one uppercase letter, one lowercase letter, one number, and one symbol.</Typography>
+    //         </FormControl>
+    //         <FormControl error={password !== passwordConf} required>
+    //             <FormLabel>Confirm Password</FormLabel>
+    //             <Input onChange={(e) => setPasswordConf(e.target.value)} type="password" name="passwordConf"/>
+    //             {(password !== passwordConf) && <FormHelperText>Passwords must match.</FormHelperText>}
+    //         </FormControl>
+    //         <Button loading={loading} type="submit" fullWidth>
+    //             Register
+    //         </Button>
+    //     </form>
+    //     {error && <Typography color="danger"
+    //                           level="body-sm"
+    //                           variant="soft"
+    //                           sx={{my: 1, mb: 3, mx: 'auto', gap: 5}}>
+    //     {error}
+    // </Typography>}</Box> : <Box sx={{my: 3, display: 'flex', flexDirection: 'column'}}>
+    //             <Typography component="h1" fontSize="xl2" fontWeight="lg" sx={{mx: 'auto'}}>
+    //                 Thank you for registering
+    //             </Typography>
+    //             <Typography level="body-lg">
+    //                 Please check your email for a confirmation link
+    //             </Typography>
+    //         </Box>}
+    //     </Sheet>
+    // </CssVarsProvider>
 }

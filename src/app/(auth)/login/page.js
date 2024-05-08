@@ -32,7 +32,7 @@ export default function SignIn() {
         }
 
         const token = sessionStorage.getItem('token')
-        if (token !== null && token.length > 0) setAlert(true)
+        if (token !== null && token.length > 0) setAlert(true) // probably should call validate here before setting alert
     }, [])
 
     const handleSignIn = (data) => {
@@ -183,14 +183,14 @@ export default function SignIn() {
                                 Sign in
                             </Button>
                         </form>
-                        <Button
-                            variant="outlined"
-                            color="neutral"
-                            fullWidth
-                            onClick={() => router.push('/register')}
-                        >
-                            Register
-                        </Button>
+                        {/*<Button*/}
+                        {/*    variant="outlined"*/}
+                        {/*    color="neutral"*/}
+                        {/*    fullWidth*/}
+                        {/*    onClick={() => router.push('/register')}*/}
+                        {/*>*/}
+                        {/*    Register*/}
+                        {/*</Button>*/}
                         {error && <Typography color="danger"
                                               level="body-sm"
                                               variant="soft"
