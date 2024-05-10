@@ -1,5 +1,6 @@
 import './globals.css'
 import {roboto_slab} from "@/app/fonts";
+import {Suspense} from "react";
 
 export const metadata = {
     title: 'Physics Inventory',
@@ -14,7 +15,9 @@ export const viewport = {
 export default function RootLayout({children}) {
     return <html lang="en" className={roboto_slab.className}>
       <body>
-        {children}
+      <Suspense>
+          {children}
+      </Suspense>
       </body>
     </html>
 }
