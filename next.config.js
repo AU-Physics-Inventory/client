@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['795h2gwn-dev.physicsinventory.gq', 'khd5028k-dev.nyc3.cdn.digitaloceanspaces.com']
+        remotePatterns: [
+            {protocol: 'https', hostname: 'cdn.physicsinventory.app'},
+            {protocol: 'https', hostname: 'khd5028k-dev.nyc3.cdn.digitaloceanspaces.com'}
+        ]
     }
 }
 
